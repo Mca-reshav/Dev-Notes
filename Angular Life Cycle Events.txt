@@ -1,0 +1,5 @@
+Angular Life Cycle Events
+
+Events sequence: Hooks
+
+1. ngOnChanges() : 

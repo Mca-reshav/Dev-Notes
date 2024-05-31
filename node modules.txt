@@ -1,0 +1,35 @@
+Efficient File and Network Operations:
+Modules like fs, net, http, https, and dns are crucial for handling file system operations and network-related tasks.
+
+Concurrency and Performance:
+Modules such as cluster, child_process, and worker_thread enable developers to leverage concurrency and take advantage of multi-core systems, improving performance.
+
+Security and Cryptography:
+The crypto and tls/ssl modules provide tools for implementing secure communication and cryptographic operations.
+
+Debugging and Profiling:
+The inspector module facilitates debugging and profiling of Node.js applications, helping developers identify and address issues.
+
+Event-driven Programming:
+The events module is fundamental for event-driven programming in Node.js, allowing developers to create and handle custom events.
+
+Packaging and Distribution:
+Understanding modules like packages and techniques for creating single executable apps is valuable for packaging and distributing Node.js applications.
+
+Command-line Interactions:
+Skills in command-line operations (command-line Ops, readline) are essential for building command-line tools and interfaces.
+
+Web Development:
+Modules like http, http/2, https, and url are core to building web applications and handling HTTP communication.
+
+Asynchronous Programming:
+The timers and cron modules, along with the event-driven architecture, support asynchronous programming, a key aspect of Node.js.
+
+Utilities and OS Interaction:
+Modules like os, path, and utilities provide utilities for working with the operating system, file paths, and common tasks.
+
+Error Handling and Permissions:
+The domain module (though deprecated) and considerations for permissions (permissions) are relevant for handling errors and managing permissions.
+
+
+auth: bcrpty -> password,  cryptojs -> surname, jwt -> token auth

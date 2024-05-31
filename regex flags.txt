@@ -1,0 +1,13 @@
+regex flags:
+
+1. global(g): const regex = /pattern/g; : It will match all occurences in input string, not just first one
+
+2. case-insensitive(i): const regex = /pattern/i; : It will match cases of character
+
+3. multiline(m): const regex = /pattern/m; : This flag changes the behavior of ^ and $ so that they match the start or end of each line
+
+4. singleLine or dotAll(s): const regex = /pattern/s;  : To match any character including newline \n
+
+5. unicode(u): const regex = /pattern/u; : To match unicode, useful in working with characters outside the ASCII range
+
+6. sticky(y): const regex = /pattern/y; : To match only from the index indicated by lastIndex

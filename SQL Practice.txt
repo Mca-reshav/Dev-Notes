@@ -1,0 +1,107 @@
+
+// SQL Practice
+
+1. LEAST: It is not an aggregate function like MIN/MAX but it is used to return the minimum value among arguments
+
+2. COALESCE: It is used to return the first value that is not null, alternative of if null 
+
+3. STORED PROCEDURE: 
+	
+	CREATE PROCEDURE <name(arguments)>
+		BEGIN
+			IF
+			END IF
+			ELSE
+			.
+			.
+			.
+		END;
+
+4. Second highest salary: using offset to skip the limit by 1 
+
+SELECT * FROM empData WHERE salary < (SELECT salary FROM empData ORDER BY salary DESC LIMIT 1) ORDER BY salary DESC LIMIT 1 OFFSET 1;
+
+without offset: SELECT * FROM empData WHERE salary < (SELECT salary FROM empData ORDER BY salary DESC LIMIT 1) LIMIT 1
+
+5. Rename the table: ALTER TABLE epmData RENAME TO empData
+
+6. SQL Transaction: (Books Stock inventory management)
+	
+	
+7. find third highest:
+
+SELECT * FROM empData WHERE salary = ( SELECT DISTINCT salary FROM empData ORDER BY salary DESC LIMIT 1 OFFSET 2);// to retreive all info
+SELECT salary FROM empData ORDER BY salary DESC LIMIT 1 OFFSET 2 // only salary of third highest
+
+without using offset
+
+SELECT MAX(salary) AS third_highest_salary FROM empData WHERE salary NOT IN ( SELECT salary FROM empData ORDER BY salary DESC LIMIT 2 );
+
+
+8. Alter table to add mulitple col
+
+ALTER TABLE cust_tbl  
+ADD cust_address varchar(100) NOT NULL  
+AFTER cust_surname,  
+ADD cust_salary int(100) NOT NULL  
+AFTER cust_age ; 
+
+9. find the duplicate record
+
+SELECT GeekRank, COUNT(GeekID) AS DuplicateRanks
+FROM Geeks
+GROUP BY GeekRank
+HAVING COUNT(GeekRank)>1;
+
+delete the duplicate record
+
+DELETE FROM your_table
+WHERE id NOT IN (
+    SELECT MIN(id)  -- or MAX(id) depending on which record you want to keep
+    FROM your_table
+    GROUP BY name
+    HAVING COUNT(*) > 1
+);
+
+
+10. col names and details 
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'user_pancard_details'
+ORDER BY ORDINAL_POSITION
+
+SHOW FULL COLUMNS FROM `user_pancard_details`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,13 @@
+Optimize Backend
+
+Methods to prevent from bottleneck
+
+1. Use caching : Redis
+2. Optimize the query : indexing, CTE and partitions
+3. Auth logic : Cluster 
+4. Rate limiting 
+5. Blacklist token
+6. Horizontal scaling of instances
+7. Implement session management
+8. Implement message queue : Rabbit MQ, Kafka
+9. Monitoring and logging tools

@@ -1,0 +1,240 @@
+SQL Transaction
+
+-- Start a transaction
+BEGIN TRANSACTION;
+
+-- Assume we're transferring $100 from account with ID 1 to account with ID 2
+DECLARE @fromAccountID INT = 1;
+DECLARE @toAccountID INT = 2;
+DECLARE @transferAmount DECIMAL(10, 2) = 100;
+
+-- Check if the from account has sufficient balance
+IF (SELECT balance FROM Accounts WHERE account_id = @fromAccountID) >= @transferAmount THEN
+    -- Deduct the amount from the from account
+    UPDATE Accounts SET balance = balance - @transferAmount WHERE account_id = @fromAccountID;
+
+    -- Add the amount to the to account
+    UPDATE Accounts SET balance = balance + @transferAmount WHERE account_id = @toAccountID;
+
+    -- Record the transaction details
+    INSERT INTO Transactions (from_account_id, to_account_id, amount, timestamp)
+    VALUES (@fromAccountID, @toAccountID, @transferAmount, NOW());
+
+    -- Commit the transaction if everything is okay
+    COMMIT;
+ELSE
+    -- Rollback the transaction if the from account doesn't have sufficient balance
+    ROLLBACK;
+END IF;
+
+
+
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(255),
+    price DECIMAL(8, 2)
+);
+
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(255),
+    balance DECIMAL(10, 2)
+);
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    book_id INT,
+    quantity INT,
+    order_total DECIMAL(10, 2),
+    order_date TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+
+
+
+-- Start a transaction
+BEGIN TRANSACTION;
+
+-- Assume a customer with ID 1 is placing an order for a book with ID 101
+DECLARE @customerID INT = 1;
+DECLARE @bookID INT = 101;
+DECLARE @quantity INT = 2;
+
+-- Check if the book is in stock and if the customer has enough balance
+IF (
+    (SELECT stock_quantity FROM Books WHERE book_id = @bookID) >= @quantity
+    AND (SELECT balance FROM Customers WHERE customer_id = @customerID) >=
+    ((SELECT price FROM Books WHERE book_id = @bookID) * @quantity)
+) THEN
+    -- Deduct the book quantity from the inventory
+    UPDATE Books SET stock_quantity = stock_quantity - @quantity WHERE book_id = @bookID;
+
+    -- Deduct the order total from the customer's balance
+    UPDATE Customers SET balance = balance - ((SELECT price FROM Books WHERE book_id = @bookID) * @quantity)
+    WHERE customer_id = @customerID;
+
+    -- Record the order details
+    INSERT INTO Orders (customer_id, book_id, quantity, order_total, order_date)
+    VALUES (
+        @customerID,
+        @bookID,
+        @quantity,
+        ((SELECT price FROM Books WHERE book_id = @bookID) * @quantity),
+        NOW()
+    );
+
+    -- Commit the transaction if everything is okay
+    COMMIT;
+ELSE
+    -- Rollback the transaction if the book is not in stock or the customer doesn't have enough balance
+    ROLLBACK;
+END IF;
+
+
+
+
+
+-- Start a transaction
+BEGIN TRANSACTION;
+
+-- Assume a customer with ID 1 is placing an order for a book with ID 101
+DECLARE @customerID INT = 1;
+DECLARE @bookID INT = 101;
+DECLARE @quantity INT = 2;
+
+-- Calculate the order total using a CTE
+WITH OrderDetails AS (
+    SELECT
+        price * @quantity AS calculated_price,
+        stock_quantity
+    FROM
+        Books
+    WHERE
+        book_id = @bookID
+)
+
+-- Check if the book is in stock and if the customer has enough balance
+IF (
+    (SELECT stock_quantity FROM OrderDetails) >= @quantity
+    AND (SELECT balance FROM Customers WHERE customer_id = @customerID) >= (SELECT calculated_price FROM OrderDetails)
+) THEN
+    -- Deduct the book quantity from the inventory
+    UPDATE Books SET stock_quantity = stock_quantity - @quantity WHERE book_id = @bookID;
+
+    -- Deduct the order total from the customer's balance
+    UPDATE Customers SET balance = balance - (SELECT calculated_price FROM OrderDetails)
+    WHERE customer_id = @customerID;
+
+    -- Record the order details
+    INSERT INTO Orders (customer_id, book_id, quantity, order_total, order_date)
+    SELECT
+        @customerID,
+        @bookID,
+        @quantity,
+        (SELECT calculated_price FROM OrderDetails),
+        NOW();
+
+    -- Commit the transaction if everything is okay
+    COMMIT;
+ELSE
+    -- Rollback the transaction if the book is not in stock or the customer doesn't have enough balance
+    ROLLBACK;
+END IF;
+
+
+
+
+
+ 
+-- Start a transaction
+BEGIN TRANSACTION;
+
+-- Assume a customer with ID 1 is placing an order for a book with ID 101
+DECLARE @customerID INT = 1;
+DECLARE @bookID INT = 101;
+DECLARE @quantity INT = 2;
+
+-- Declare a variable to store the calculated price
+DECLARE @calculatedPrice DECIMAL(10, 2);
+
+-- Calculate the order total and retrieve the stock quantity
+WITH OrderDetails AS (
+    SELECT
+        price * @quantity AS calculated_price,
+        stock_quantity
+    FROM
+        Books
+    WHERE
+        book_id = @bookID
+)
+
+-- Check if the book is in stock and if the customer has enough balance
+IF (
+    (SELECT stock_quantity FROM OrderDetails) >= @quantity
+    AND (SELECT balance FROM Customers WHERE customer_id = @customerID) >= (SELECT calculated_price FROM OrderDetails)
+) THEN
+    -- Assign the calculated price to the variable
+    SET @calculatedPrice = (SELECT calculated_price FROM OrderDetails);
+
+    -- Deduct the book quantity from the inventory
+    UPDATE Books SET stock_quantity = stock_quantity - @quantity WHERE book_id = @bookID;
+
+    -- Deduct the order total from the customer's balance
+    UPDATE Customers SET balance = balance - @calculatedPrice
+    WHERE customer_id = @customerID;
+
+    -- Record the order details
+    INSERT INTO Orders (customer_id, book_id, quantity, order_total, order_date)
+    VALUES (
+        @customerID,
+        @bookID,
+        @quantity,
+        @calculatedPrice,
+        NOW()
+    );
+
+    -- Commit the transaction if everything is okay
+    COMMIT;
+ELSE
+    -- Rollback the transaction if the book is not in stock or the customer doesn't have enough balance
+    ROLLBACK;
+END IF;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

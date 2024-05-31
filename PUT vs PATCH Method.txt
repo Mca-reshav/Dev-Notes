@@ -1,0 +1,21 @@
+PUT vs PATCH Method
+
+1. Data transfer and bandwidth:
+	
+	PUT: It send the entire representation of resource, results in higher data transfer and bandwidth usage
+	PATCH: Allow you to send only the changes, beneficial in terms of costs
+
+2. Server processing:
+
+	PUT: More resource-intensive as it handling entire payload
+	PATCH: Request involves applying partial updates
+
+3. Caching:
+
+	PUT: Less effective as entire resource is expected to change
+	PATCH: More effective, especially if app supports conditional requests(e.g., ETags)
+
+4. Client-Side considerations:
+
+	PUT: Need to send entire updated representation
+	PATCH: Need to handle partial updates *may become complex

@@ -1,0 +1,7 @@
+Data storage methods
+
+Cookie vs Local Storage vs Session
+
+1. Cookie: Safe by setting attributes like: Http only, secure and same site to store auth tokens and sent with every http request that makes it slow (4KB)
+2. Local Storage: faster performance and sync operations makes suitable for storing larger amount of data (5MB)
+3.Session: Fast as local but used for storing temporary data as session will get ended like browser get closed

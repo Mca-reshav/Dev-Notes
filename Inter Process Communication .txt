@@ -1,0 +1,18 @@
+Inter Process Communication 
+
+Node.js + Python
+
+Different methods to implement:
+
+1. HTTP Request: node.js APIs and python as service: Axios to Django Restful 
+2. Message Queue: Rabbit MQ : node.js APIs to send message to python 
+3. Shared Database: periodically read and update 
+4. Child Process: node to spawn child process and execute python script as child processes and communicate via stdin/out or inter communication like : sockets  
+
+
+Use cases: 
+ 
+1. HTTP: simple and easy to implement
+2. MQ: ideal for async ops, to handle large volume of data processing, scalability and fault tolerance
+3. Shared DB: data persistency and consistency is important and allow data synchronization
+4. CP: Tight integration like real time communication but require careful management

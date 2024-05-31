@@ -1,0 +1,20 @@
+Angular 17
+----------
+
+Angular is a js framework to create spa
+
+# Framework: A platform for developing s/w app, it has pre-defined classes and functions that can be used to add functionalities
+
+# SPA: A web app that has only one html page, when we navigate only contents get changed not the page itself
+
+Angular CLI: npm install -global @angular/cli@latest 
+
+ng-build: to see the embedded files in <app-root></app-root> of index.html
+
+dist: build is created by bundling files
+
+bundler: webpack 
+
+flow: Angular project >> index.html >> angular.json >> main.ts >> appModule >> app.component.ts
+
+

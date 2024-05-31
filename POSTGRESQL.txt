@@ -1,0 +1,10 @@
+POSTGRESQL
+
+CREATE TABLE IF NOT EXISTS customers (
+	cust_id SERIAL PRIMARY KEY,
+	name VARCHAR (100),
+	email_id VARCHAR (100),
+	mobile_number INT,
+	address VARCHAR (200),
+	balance DECIMAL(10,2)
+)
